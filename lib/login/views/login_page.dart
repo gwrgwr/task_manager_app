@@ -107,10 +107,11 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     String name = userNameController.text;
                     setState(() {
-                      Get.to(
+                      Get.off(
                       () => HomePage(
                         username: name,
                       ),
+
                     );
                     userNameController.clear();  
                     },);
