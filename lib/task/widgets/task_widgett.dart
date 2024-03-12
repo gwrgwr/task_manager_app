@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:task_manager_app/utils/color_app.dart';
 
 class TaskWidget extends StatelessWidget {

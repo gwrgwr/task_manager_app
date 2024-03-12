@@ -1,6 +1,9 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:intl/intl.dart';
+import 'package:task_manager_app/home/controllers/home_controller.dart';
 import 'package:task_manager_app/utils/color_app.dart';
 
 class HomeWidget extends StatelessWidget {
@@ -24,6 +27,9 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final HomeController c = Get.put(HomeController());
+
     return Scaffold(
       backgroundColor: ColorApp.backgroundColor,
       appBar: appBarSection(),
@@ -63,7 +69,9 @@ class HomeWidget extends StatelessWidget {
               SizedBox(height: 35),
               EasyDateTimeLine(
                 initialDate: DateTime.now(),
-                onDateChange: (selectedDate) {},
+                onDateChange: (selectedDate) {
+                  c.selectedDay.value = selectedDate.day;
+                },
                 headerProps: EasyHeaderProps(
                   showSelectedDate: false,
                   monthStyle: TextStyle(
