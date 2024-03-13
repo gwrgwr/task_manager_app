@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
               gap: 10,
               padding: EdgeInsets.all(20),
               tabMargin: EdgeInsets.all(8),
-              tabs: [
+              tabs: const [
                 GButton(
                   icon: Icons.home,
                   text: 'Home',

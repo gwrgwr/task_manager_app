@@ -1,16 +1,25 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:intl/intl.dart';
 import 'package:task_manager_app/home/controllers/home_controller.dart';
+import 'package:task_manager_app/task/bloc/task_bloc.dart';
+import 'package:task_manager_app/task/bloc/task_event.dart';
+import 'package:task_manager_app/task/bloc/task_state.dart';
 import 'package:task_manager_app/utils/color_app.dart';
 
-class HomeWidget extends StatelessWidget {
+class HomeWidget extends StatefulWidget {
   const HomeWidget({required this.username, super.key});
 
   final String username;
 
+  @override
+  State<HomeWidget> createState() => _HomeWidgetState();
+}
+
+class _HomeWidgetState extends State<HomeWidget> {
   String getTimeNow() {
     final DateTime myDateTime = DateTime.now();
     final formatedDate = DateFormat.H().format(myDateTime);
@@ -25,9 +34,23 @@ class HomeWidget extends StatelessWidget {
     }
   }
 
+  late final TaskBloc bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    bloc = TaskBloc();
+    bloc.add(GetTasks());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    bloc.close();
+  }
+
   @override
   Widget build(BuildContext context) {
-
     final HomeController c = Get.put(HomeController());
 
     return Scaffold(
@@ -36,7 +59,7 @@ class HomeWidget extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
-          vertical: 50,
+          vertical: 15,
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -66,19 +89,20 @@ class HomeWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 35),
+              SizedBox(height: 15),
               EasyDateTimeLine(
                 initialDate: DateTime.now(),
                 onDateChange: (selectedDate) {
                   c.selectedDay.value = selectedDate.day;
                 },
                 headerProps: EasyHeaderProps(
-                  showSelectedDate: false,
-                  monthStyle: TextStyle(
-                    color: ColorApp.textColor,
-                  ),
+                  dateFormatter: DateFormatter.fullDateDMonthAsStrY(),
+                  showMonthPicker: false,
+                  selectedDateStyle:
+                      TextStyle(color: ColorApp.textColor, fontSize: 21),
                 ),
                 dayProps: EasyDayProps(
+                  height: 90,
                   todayHighlightStyle: TodayHighlightStyle.withBackground,
                   todayHighlightColor: ColorApp.subBackgroundColor,
                   todayStyle: DayStyle(
@@ -132,6 +156,32 @@ class HomeWidget extends StatelessWidget {
                     ],
                   )
                 ],
+              ),
+              BlocBuilder<TaskBloc, TaskState>(
+                bloc: bloc,
+                builder: (context, state) {
+                  return state.taskList.isEmpty
+                      ? Center(
+                          child: Text(
+                            'Sem nada',
+                            style: TextStyle(
+                              color: ColorApp.textColor,
+                            ),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: state.taskList.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              child: Column(
+                                children: [
+                                  Text(state.taskList[index].taskName),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                },
               )
             ],
           ),
@@ -175,7 +225,7 @@ class HomeWidget extends StatelessWidget {
                 color: ColorApp.textColor.withOpacity(0.4), fontSize: 18),
           ),
           Text(
-            username,
+            widget.username,
             style: TextStyle(color: ColorApp.textColor, fontSize: 24),
           ),
         ],

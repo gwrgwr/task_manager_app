@@ -1,6 +1,5 @@
 import 'package:task_manager_app/task/bloc/task_event.dart';
 import 'package:task_manager_app/task/bloc/task_state.dart';
-import 'package:task_manager_app/task/models/task_model.dart';
 import 'package:task_manager_app/task/repository/task_repository.dart';
 import 'package:bloc/bloc.dart';
 

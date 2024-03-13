@@ -4,7 +4,7 @@ class TaskRepository {
   final List<TaskModel> _taskList = [];
 
   List<TaskModel> getTasks() {
-    _taskList.addAll([TaskModel(taskName: 'teste')]);
+    _taskList.addAll([]);
     return _taskList;
   }
 
