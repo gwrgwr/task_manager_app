@@ -5,10 +5,11 @@ class TaskModel {
   final String endDate;
   final String timeline;
 
-  TaskModel(
-      {required this.taskName,
-      required this.description,
-      required this.dueDate,
-      required this.endDate,
-      required this.timeline});
+  TaskModel({
+    required this.taskName,
+    required this.description,
+    required this.dueDate,
+    required this.endDate,
+    required this.timeline,
+  });
 }

@@ -1,13 +1,9 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:intl/intl.dart';
 import 'package:task_manager_app/home/controllers/home_controller.dart';
-import 'package:task_manager_app/task/bloc/task_bloc.dart';
-import 'package:task_manager_app/task/bloc/task_event.dart';
-import 'package:task_manager_app/task/bloc/task_state.dart';
 import 'package:task_manager_app/utils/color_app.dart';
 
 class HomeWidget extends StatefulWidget {
@@ -33,22 +29,6 @@ class _HomeWidgetState extends State<HomeWidget> {
       return "Good Evening 🍽";
     }
   }
-
-  late final TaskBloc bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    bloc = TaskBloc();
-    bloc.add(GetTasks());
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    bloc.close();
-  }
-
   @override
   Widget build(BuildContext context) {
     final HomeController c = Get.put(HomeController());
@@ -133,56 +113,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                 ),
               ),
               SizedBox(height: 15),
-              Row(
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          children: [],
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          children: [],
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-              BlocBuilder<TaskBloc, TaskState>(
-                bloc: bloc,
-                builder: (context, state) {
-                  return state.taskList.isEmpty
-                      ? Center(
-                          child: Text(
-                            'Sem nada',
-                            style: TextStyle(
-                              color: ColorApp.textColor,
-                            ),
-                          ),
-                        )
-                      : ListView.builder(
-                          itemCount: state.taskList.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              child: Column(
-                                children: [
-                                  Text(state.taskList[index].taskName),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                },
-              )
             ],
           ),
         ),

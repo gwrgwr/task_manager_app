@@ -2,9 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:task_manager_app/task/bloc/task_bloc.dart';
-import 'package:task_manager_app/task/bloc/task_event.dart';
-import 'package:task_manager_app/task/models/task_model.dart';
 import 'package:task_manager_app/utils/color_app.dart';
 
 class TaskWidget extends StatelessWidget {
@@ -201,18 +198,6 @@ class TaskWidget extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  final TaskBloc bloc = TaskBloc();
-                  bloc.add(
-                    PostTasks(
-                      task: TaskModel(
-                        description: taskDescriptionController.text,
-                        dueDate: taskDueDateController.text,
-                        endDate: taskEndDateController.text,
-                        taskName: taskTitleController.text,
-                        timeline: taskTimelineController.text,
-                      ),
-                    ),
-                  );
                 },
                 child: Container(
                   width: double.infinity,
