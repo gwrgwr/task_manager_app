@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:task_manager_app/task/cubit/task_cubit.dart';
 import 'package:task_manager_app/utils/color_app.dart';
 
 class TaskWidget extends StatelessWidget {
@@ -48,6 +50,7 @@ class TaskWidget extends StatelessWidget {
             children: [
               SizedBox(height: 10),
               TextField(
+                style: TextStyle(color: ColorApp.textColor),
                 controller: taskTitleController,
                 cursorColor: ColorApp.textColor,
                 decoration: InputDecoration(
@@ -74,6 +77,7 @@ class TaskWidget extends StatelessWidget {
                 height: 25,
               ),
               TextField(
+                style: TextStyle(color: ColorApp.textColor),
                 controller: taskDescriptionController,
                 cursorColor: ColorApp.textColor,
                 maxLines: 4,
@@ -169,6 +173,7 @@ class TaskWidget extends StatelessWidget {
                 height: 25,
               ),
               TextField(
+                style: TextStyle(color: ColorApp.textColor),
                 controller: taskTimelineController,
                 inputFormatters: [maskFormatterTime],
                 cursorColor: ColorApp.textColor,
@@ -198,6 +203,13 @@ class TaskWidget extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
+                  BlocProvider.of<TaskCubit>(context).AddItem(
+                    taskTitleController.text,
+                    taskDescriptionController.text,
+                    taskDueDateController.text,
+                    taskEndDateController.text,
+                    taskTimelineController.text,
+                  );
                 },
                 child: Container(
                   width: double.infinity,

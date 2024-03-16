@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:task_manager_app/home/views/home_page.dart';
 import 'package:task_manager_app/utils/color_app.dart';
 
@@ -106,16 +105,18 @@ class _LoginPageState extends State<LoginPage> {
                 child: TextButton(
                   onPressed: () {
                     String name = userNameController.text;
-                    setState(() {
-                      Get.off(
-                      () => HomePage(
-                        username: name,
-                      ),
-
+                    setState(
+                      () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                HomePage(username: name),
+                          ),
+                        );
+                        userNameController.clear();
+                      },
                     );
-                    userNameController.clear();  
-                    },);
-                    
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),

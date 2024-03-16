@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:task_manager_app/home/controllers/home_controller.dart';
 import 'package:task_manager_app/home/widgets/home_widget.dart';
@@ -13,7 +14,6 @@ class HomePage extends StatelessWidget {
   final String username;
 
   final HomeController c = Get.put(HomeController());
-
   @override
   Widget build(BuildContext context) {
     final List<Widget> _widgetOptions = [

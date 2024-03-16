@@ -12,4 +12,9 @@ class TaskModel {
     required this.endDate,
     required this.timeline,
   });
+
+  @override
+  String toString() {
+    return 'TaskModel(taskName: $taskName, description: $description, dueDate: $dueDate, endDate: $endDate, timeline: $timeline)';
+  }
 }
